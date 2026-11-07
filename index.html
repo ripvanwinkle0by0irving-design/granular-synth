@@ -4,32 +4,33 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#111a20">
-<title>粒音 — TIME SCULPT 0.4</title>
+<title>粒音 — DUAL ENGINE 0.5</title>
 <style>
-:root{color-scheme:dark;--bg:#111a20;--panel:#1d2a30;--line:#34464b;--ink:#f4f3ea;--muted:#aabec0;--mint:#a9ddca;--gold:#edcba2;--red:#f2a9a4}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;line-height:1.5}main{max-width:610px;margin:auto;padding:20px 16px calc(32px + env(safe-area-inset-bottom))}header{margin:8px 3px 20px}h1{font-size:32px;letter-spacing:.08em;font-weight:570;margin:0}h1 span{font-size:13px;color:var(--mint);letter-spacing:.15em}header p{margin:2px 0;color:var(--muted);font-size:13px}.panel{padding:18px;border:1px solid var(--line);background:var(--panel);border-radius:18px;margin-bottom:14px}.panel h2{font-size:12px;letter-spacing:.12em;font-weight:650;color:var(--mint);margin:0 0 14px}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}button,.file{font:inherit;border:0;border-radius:12px;padding:12px 9px;min-height:48px;font-weight:650;background:var(--mint);color:#11231e;touch-action:manipulation;cursor:pointer}button.secondary,.file{background:#384e54;color:var(--ink)}button:disabled{opacity:.36;cursor:default}button.active{background:var(--gold);color:#302214}.file{display:block;margin-top:10px;text-align:center;font-size:14px}.file input{display:none}.status{font-size:13px;color:var(--muted);margin:12px 0 0;min-height:1.6em}.error{color:var(--red)}#duration{font-size:13px;color:var(--mint);margin:5px 0 0}.pillrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}.pillrow button{min-height:54px}.slider{margin:14px 0 19px}.slider:last-child{margin-bottom:0}.sliderhead{display:flex;align-items:center;justify-content:space-between;gap:10px}.slider label{font-size:14px;font-weight:600}.slider output{font-size:12px;color:var(--mint);font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:var(--mint);height:32px;margin:4px 0 0;touch-action:pan-y}.note{font-size:12px;color:var(--muted);margin:8px 0 0}.wave{height:92px;display:block;width:100%;background:#142129;border-radius:12px;border:1px solid #30454a;margin:12px 0}.tag{font-size:11px;color:var(--gold);letter-spacing:.08em}.exportrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}.exportrow select{background:#374b50;color:var(--ink);border:1px solid #5a7071;border-radius:11px;min-height:48px;padding:8px;font-size:15px}footer{font-size:12px;color:var(--muted);padding:10px 2px}.waveedit{height:160px;touch-action:none;cursor:crosshair}.wavehelp{font-size:12px;color:var(--muted);margin:2px 0 10px}.editstats{display:flex;justify-content:space-between;font-size:12px;color:var(--mint);gap:8px;margin-bottom:10px}.editbuttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.editbuttons button{font-size:13px;min-height:46px;padding:10px 5px}.smallnote{font-size:12px;color:var(--muted);margin:9px 0 0}.sourcebadge{background:#29413e;border-radius:7px;padding:3px 7px;font-size:11px;color:var(--mint)}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+:root{color-scheme:dark;--bg:#111a20;--panel:#1d2a30;--line:#34464b;--ink:#f4f3ea;--muted:#aabec0;--mint:#a9ddca;--gold:#edcba2;--red:#f2a9a4}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;line-height:1.5}main{max-width:780px;margin:auto;padding:20px 16px calc(32px + env(safe-area-inset-bottom))}header{margin:8px 3px 20px}h1{font-size:32px;letter-spacing:.08em;font-weight:570;margin:0}h1 span{font-size:13px;color:var(--mint);letter-spacing:.15em}header p{margin:2px 0;color:var(--muted);font-size:13px}.panel{padding:18px;border:1px solid var(--line);background:var(--panel);border-radius:18px;margin-bottom:14px}.panel h2{font-size:12px;letter-spacing:.12em;font-weight:650;color:var(--mint);margin:0 0 14px}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}button,.file{font:inherit;border:0;border-radius:12px;padding:12px 9px;min-height:48px;font-weight:650;background:var(--mint);color:#11231e;touch-action:manipulation;cursor:pointer}button.secondary,.file{background:#384e54;color:var(--ink)}button:disabled{opacity:.36;cursor:default}button.active{background:var(--gold);color:#302214}.file{display:block;margin-top:10px;text-align:center;font-size:14px}.file input{display:none}.status{font-size:13px;color:var(--muted);margin:12px 0 0;min-height:1.6em}.error{color:var(--red)}#duration{font-size:13px;color:var(--mint);margin:5px 0 0}.pillrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}.pillrow button{min-height:54px}.slider{margin:14px 0 19px}.slider:last-child{margin-bottom:0}.sliderhead{display:flex;align-items:center;justify-content:space-between;gap:10px}.slider label{font-size:14px;font-weight:600}.slider output{font-size:12px;color:var(--mint);font-variant-numeric:tabular-nums}input[type=range]{width:100%;accent-color:var(--mint);height:32px;margin:4px 0 0;touch-action:pan-y}.note{font-size:12px;color:var(--muted);margin:8px 0 0}.wave{height:92px;display:block;width:100%;background:#142129;border-radius:12px;border:1px solid #30454a;margin:12px 0}.tag{font-size:11px;color:var(--gold);letter-spacing:.08em}.exportrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}.exportrow select{background:#374b50;color:var(--ink);border:1px solid #5a7071;border-radius:11px;min-height:48px;padding:8px;font-size:15px}footer{font-size:12px;color:var(--muted);padding:10px 2px}.waveedit{height:160px;touch-action:none;cursor:crosshair}.wavehelp{font-size:12px;color:var(--muted);margin:2px 0 10px}.editstats{display:flex;justify-content:space-between;font-size:12px;color:var(--mint);gap:8px;margin-bottom:10px}.editbuttons{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.editbuttons button{font-size:13px;min-height:46px;padding:10px 5px}.smallnote{font-size:12px;color:var(--muted);margin:9px 0 0}.sourcebadge{background:#29413e;border-radius:7px;padding:3px 7px;font-size:11px;color:var(--mint)}.engineinfo{background:#14262b;border:1px solid #3f5e63;border-radius:12px;padding:12px;margin:12px 0;color:var(--muted);font-size:12px}.engines{display:grid;grid-template-columns:1fr 1fr;gap:10px}.engines button{background:#34494e;color:#e7e8e2;border:1px solid #52656a}.engines button.active{background:#3d6559;color:#fff;border-color:#a9ddca}.spectralmode .grainonly{opacity:.5}.spectralstatus{font-size:12px;color:var(--mint);min-height:1.5em}.spectralcontrols{display:none}.spectralmode .spectralcontrols{display:block}.spectralmode .grainonly{pointer-events:none}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 </style>
 </head>
 <body><main>
-<header><h1>粒音 <span>TIME SCULPT / 0.4</span></h1><p>音程はそのまま、時間を引き伸ばす。</p></header>
+<header><h1>粒音 <span>DUAL ENGINE / 0.5</span></h1><p>GRAINとSPECTRAL。音の粒と周波数を彫刻する。</p></header>
 <section class="panel"><h2>01 / CAPTURE — 音を採集</h2><div class="buttons"><button id="record">● 録音開始</button><button class="secondary" id="stopRecord" disabled>■ 録音停止</button></div><label class="file">または音声ファイルを読み込む<input type="file" id="file" accept="audio/*"></label><p id="recordStatus" class="status" role="status">録音開始を押すとマイクの許可を求めます。</p><div id="duration">サンプル未読み込み</div></section>
 <section class="panel"><h2>02 / WAVE EDIT — 波形を編集</h2><p class="wavehelp">波形の上を指でなぞって範囲を選択します。両端の丸いハンドルをドラッグすると微調整できます。</p><canvas class="wave waveedit" id="wave" aria-label="音声波形。指でドラッグして編集範囲を選択"></canvas><div class="editstats"><span id="selectionTime">範囲を選んでください</span><span id="editDuration">—</span></div><div class="editbuttons"><button id="trim" disabled>✂ 範囲を切り出す</button><button id="fadeIn" class="secondary" disabled>↗ フェードイン</button><button id="fadeOut" class="secondary" disabled>↘ フェードアウト</button><button id="normalize" class="secondary" disabled>◉ 音量を整える</button><button id="undo" class="secondary" disabled>↶ 元に戻す</button><button id="selectAll" class="secondary" disabled>□ 全範囲を選択</button></div><p class="smallnote" id="editStatus" role="status">録音または音声ファイルの読み込み後に編集できます。編集結果は再生・WAV書き出しにも反映されます。</p></section>
 <section class="panel"><h2>03 / PLAY — 粒子を漂わせる</h2><div class="buttons"><button id="play" disabled>▶ 再生</button><button id="stop" class="secondary" disabled>■ 停止</button></div><p class="status" id="playStatus">録音またはファイルを読み込んでください。</p></section>
-<section class="panel"><h2>04 / SCULPT — 音を彫刻する</h2><div class="pillrow"><button class="secondary" id="freeze" aria-pressed="false">◇ FREEZE オフ</button><button class="secondary" id="reverse" aria-pressed="false">↶ REVERSE オフ</button></div><p class="note">FREEZEは波形を進む動きを止めます。REVERSEは粒を逆向きに再生します。</p>
+<section class="panel"><h2>04 / DUAL ENGINE — 音の加工方式</h2><div class="engines"><button type="button" id="engineGrain" class="active" aria-pressed="true">◌ GRAIN<br><small>音の粒を組み替える</small></button><button type="button" id="engineSpectral" aria-pressed="false">≋ SPECTRAL<br><small>周波数を引き伸ばす</small></button></div><div class="engineinfo" id="engineInfo">GRAIN：粒の長さ・密度・揺らぎを再生中に変更できます。</div><p class="spectralstatus" id="spectralStatus" role="status"></p></section>
+<section class="panel"><h2>05 / SCULPT — 音を彫刻する</h2><div class="grainonly"><div class="pillrow"><button class="secondary" id="freeze" aria-pressed="false">◇ FREEZE オフ</button><button class="secondary" id="reverse" aria-pressed="false">↶ REVERSE オフ</button></div><p class="note">FREEZEは波形を進む動きを止めます。REVERSEは粒を逆向きに再生します。</p>
 <div class="slider"><div class="sliderhead"><label for="size">Grain Size / 粒の長さ</label><output id="sizeValue"></output></div><input id="size" type="range" min="20" max="1400" step="10" value="320"></div>
 <div class="slider"><div class="sliderhead"><label for="density">Density / 粒の密度</label><output id="densityValue"></output></div><input id="density" type="range" min="1" max="50" step="1" value="12"></div>
 <div class="slider"><div class="sliderhead"><label for="position">Position / 再生位置</label><output id="positionValue"></output></div><input id="position" type="range" min="0" max="100" step="1" value="50"></div>
-<div class="slider"><div class="sliderhead"><label for="stretch">Time Stretch / 時間の引き伸ばし</label><output id="stretchValue"></output></div><input id="stretch" type="range" min="1" max="32" step="0.5" value="8"></div>
+</div><div class="slider"><div class="sliderhead"><label for="stretch">Time Stretch / 時間の引き伸ばし</label><output id="stretchValue"></output></div><input id="stretch" type="range" min="1" max="32" step="0.5" value="8"></div>
 <p class="note" id="stretchHint">波形を進む速さを調整します。音程は変わりません。</p>
 <div class="slider"><div class="sliderhead"><label for="pitch">Pitch / 音程</label><output id="pitchValue"></output></div><input id="pitch" type="range" min="-24" max="24" step="1" value="0"></div>
-<div class="slider"><div class="sliderhead"><label for="smooth">Grain Envelope / 粒の滑らかさ</label><output id="smoothValue"></output></div><input id="smooth" type="range" min="0" max="100" step="1" value="80"></div>
+<div class="grainonly"><div class="slider"><div class="sliderhead"><label for="smooth">Grain Envelope / 粒の滑らかさ</label><output id="smoothValue"></output></div><input id="smooth" type="range" min="0" max="100" step="1" value="80"></div>
 <div class="slider"><div class="sliderhead"><label for="scan">Scan Drift / 位置の追加移動</label><output id="scanValue"></output></div><input id="scan" type="range" min="0" max="100" step="1" value="0"></div>
 <div class="slider"><div class="sliderhead"><label for="spread">Spread / 位置の揺らぎ</label><output id="spreadValue"></output></div><input id="spread" type="range" min="0" max="100" step="1" value="14"></div>
 <div class="slider"><div class="sliderhead"><label for="rate">Fine Rate / 粒の速度微調整</label><output id="rateValue"></output></div><input id="rate" type="range" min="0.25" max="2" step="0.05" value="1"></div>
-<div class="slider"><div class="sliderhead"><label for="reverb">Reverb / 残響</label><output id="reverbValue"></output></div><input id="reverb" type="range" min="0" max="100" step="1" value="35"></div>
+</div><div class="slider"><div class="sliderhead"><label for="reverb">Reverb / 残響</label><output id="reverbValue"></output></div><input id="reverb" type="range" min="0" max="100" step="1" value="35"></div>
 <div class="slider"><div class="sliderhead"><label for="volume">Volume / 音量</label><output id="volumeValue"></output></div><input id="volume" type="range" min="0" max="100" step="1" value="65"></div>
 </section>
-<section class="panel"><h2>05 / EXPORT — 音を残す</h2><p class="note">現在の設定で指定秒数の音を生成し、WAVとして保存します。録音した元の音は送信されません。</p><div class="exportrow" style="margin-top:12px"><select id="exportLength" aria-label="WAVの長さ"><option value="10">10秒</option><option value="30" selected>30秒</option><option value="60">60秒</option></select><button id="export" disabled>↓ WAVを書き出す</button></div><p class="status" role="status" id="exportStatus">音声を読み込むと書き出せます。</p></section>
-<footer>Version 0.4：グラニュラー・タイムストレッチ方式。高倍率時には粒子状の揺れが生じることがあります。音声を何倍にも引き伸ばしてファイルとして出す場合は、WAV書き出し時間も適切に選んでください。<br>iPhone Chrome / Safari対応。マイク利用にはHTTPSと使用許可が必要です。録音音声は端末内で処理し、ネットへ送信しません。ヘッドフォンを推奨します。画面ロック中の再生は保証されません。</footer>
+<section class="panel"><h2>06 / EXPORT — 音を残す</h2><p class="note">選択中のGRAIN/SPECTRALエンジンで指定秒数のWAVを生成します。SPECTRALは先に解析します。録音した元の音は送信されません。</p><div class="exportrow" style="margin-top:12px"><select id="exportLength" aria-label="WAVの長さ"><option value="10">10秒</option><option value="30" selected>30秒</option><option value="60">60秒</option></select><button id="export" disabled>↓ WAVを書き出す</button></div><p class="status" role="status" id="exportStatus">音声を読み込むと書き出せます。</p></section>
+<footer>Version 0.5：GRAIN＝グラニュラー方式、SPECTRAL＝周波数分析による位相ボコーダー方式（試験実装）。SPECTRALの設定変更後は再生時に再解析します。高倍率では音質が変化します。音声を何倍にも引き伸ばしてファイルとして出す場合は、WAV書き出し時間も適切に選んでください。<br>iPhone Chrome / Safari対応。マイク利用にはHTTPSと使用許可が必要です。録音音声は端末内で処理し、ネットへ送信しません。ヘッドフォンを推奨します。画面ロック中の再生は保証されません。</footer>
 </main><script>
 'use strict';
 const $=id=>document.getElementById(id),clamp=(n,a,b)=>Math.min(b,Math.max(a,n));
@@ -37,6 +38,7 @@ const parameters=['size','density','position','stretch','pitch','smooth','scan',
 const labels={size:v=>v+' ms',density:v=>v+' 粒/秒',position:v=>v+'%',stretch:v=>(+v).toFixed(1)+' ×',pitch:v=>(Number(v)>0?'+':'')+v+' 半音',smooth:v=>v+'%',scan:v=>v+'%',spread:v=>v+'%',rate:v=>(+v).toFixed(2)+' ×',reverb:v=>v+'%',volume:v=>v+'%'};
 for(const id of parameters){const fn=()=>$(id+'Value').textContent=labels[id]($(id).value);$(id).addEventListener('input',fn);fn();}
 let undoStack=[], selection={a:0,b:1}, dragMode=null,editBusy=false;
+let engine='grain',spectralCache=null,spectralCacheKey='',spectralBusy=false,spectralGeneration=0,spectralSource=null;
 let ctx=null,master=null,dry=null,wet=null,convolver=null,buffer=null,reversed=null,recordStream=null,recorder=null,parts=[],playing=false,timer=null,nextTime=0,scanPhase=0,lastGrainAt=0,freeze=false,reverse=false,recordToken=0;
 const sources=new Set();
 const val=id=>Number($(id).value);
@@ -55,7 +57,7 @@ function displaySelection(){const t=$('selectionTime'),d=$('editDuration');if(!b
 function drawWave(){const canvas=$('wave'),ratio=Math.min(2,window.devicePixelRatio||1),w=canvas.clientWidth||300,h=canvas.clientHeight||160;canvas.width=Math.max(1,Math.round(w*ratio));canvas.height=Math.max(1,Math.round(h*ratio));const a=canvas.getContext('2d');a.setTransform(ratio,0,0,ratio,0,0);a.clearRect(0,0,w,h);if(!buffer){a.fillStyle='#9ab2b3';a.font='12px system-ui';a.fillText('録音後、ここで波形を編集できます',12,h/2);return}const data=buffer.getChannelData(0);const step=Math.max(1,Math.floor(data.length/w));const {a:start,b:end}=selectionBounds();a.fillStyle='rgba(169,221,202,.16)';a.fillRect(start*w,0,(end-start)*w,h);a.strokeStyle='#77c8b5';a.lineWidth=1.1;a.beginPath();for(let x=0;x<w;x++){let peak=0;const i0=Math.floor(x*data.length/w);for(let j=0;j<step&&i0+j<data.length;j++)peak=Math.max(peak,Math.abs(data[i0+j]));a.moveTo(x,h/2-peak*h*.44);a.lineTo(x,h/2+peak*h*.44)}a.stroke();for(const t of [start,end]){const x=clamp(t*w,5,w-5);a.strokeStyle='#edcba2';a.lineWidth=2;a.beginPath();a.moveTo(x,0);a.lineTo(x,h);a.stroke();a.fillStyle='#edcba2';a.beginPath();a.arc(x,h/2,7,0,Math.PI*2);a.fill()}displaySelection()}
 window.addEventListener('resize',drawWave);
 function updateEditButtons(){const ready=!!buffer&&!editBusy;for(const id of ['trim','fadeIn','fadeOut','normalize','selectAll'])$(id).disabled=!ready;$('undo').disabled=!ready||!undoStack.length;displaySelection()}
-function setBuffer(b,{resetHistory=true}={}){stopPlayback();buffer=b;reversed=reverseAudio(b);scanPhase=val('position')/100;selection={a:0,b:1};if(resetHistory)undoStack=[];$('duration').textContent='読み込み済み：'+b.duration.toFixed(2)+' 秒';$('play').disabled=false;$('export').disabled=false;playStatus('再生を押して音を加工してください。');updateEditButtons();drawWave();updateStretchHint()}
+function setBuffer(b,{resetHistory=true}={}){stopPlayback();invalidateSpectral();buffer=b;reversed=reverseAudio(b);scanPhase=val('position')/100;selection={a:0,b:1};if(resetHistory)undoStack=[];$('duration').textContent='読み込み済み：'+b.duration.toFixed(2)+' 秒';$('play').disabled=false;$('export').disabled=false;playStatus('再生を押して音を加工してください。');updateEditButtons();drawWave();updateStretchHint()}
 async function decode(blob){const c=await ensureAudio();if(!blob.size)throw Error('音声データが空です');return await c.decodeAudioData(await blob.arrayBuffer())}
 // iPhone microphones are mono, but some browser/device combinations decode
 // their recordings as stereo with audio in just one channel. Mix down to mono,
@@ -98,7 +100,7 @@ function toggle(id){if(id==='freeze'){freeze=!freeze;$(id).textContent=freeze?'�
 $('freeze').addEventListener('click',()=>toggle('freeze'));$('reverse').addEventListener('click',()=>toggle('reverse'));
 $('position').addEventListener('input',()=>{scanPhase=val('position')/100});
 function updateStretchHint(){const duration=buffer?.duration||0;const stretch=val('stretch');$('stretchHint').textContent=duration?'波形を約'+(duration*stretch).toFixed(1)+'秒かけて1周します（Position開始・Freezeオフ・追加Driftなしの場合）。':'波形の進行速度だけを変更します。Pitchと独立して操作できます。'}
-$('stretch').addEventListener('input',updateStretchHint);updateStretchHint();
+$('stretch').addEventListener('input',()=>{updateStretchHint();invalidateSpectral();});$('pitch').addEventListener('input',invalidateSpectral);$('reverse').addEventListener('click',invalidateSpectral);updateStretchHint();
 // Playback position movement is independent of the rate at which a grain reads samples.
 // This is grain-based approximation of time stretching, not a phase vocoder.
 function advancePhase(phase,dt,p,seconds){
@@ -138,7 +140,7 @@ function grain(context,output,sourceBuffer,at,phase,params){
   src.start(at,offset,span);src.stop(at+duration+.015);
 }
 function snapshot(){return{size:val('size'),density:val('density'),position:val('position'),stretch:val('stretch'),pitch:val('pitch'),smooth:val('smooth'),scan:val('scan'),spread:val('spread'),rate:val('rate'),volume:val('volume'),reverb:val('reverb'),reverse,freeze}}
-function stopPlayback(){playing=false;if(timer!==null){clearInterval(timer);timer=null}for(const src of sources){try{src.stop()}catch(_){}}sources.clear();$('play').disabled=!buffer;$('stop').disabled=true}
+function stopPlayback(){playing=false;if(spectralSource){try{spectralSource.stop()}catch(_){}spectralSource=null;}if(timer!==null){clearInterval(timer);timer=null}for(const src of sources){try{src.stop()}catch(_){}}sources.clear();$('play').disabled=!buffer;$('stop').disabled=true}
 function tick(){
   if(!playing||!ctx||!buffer)return;
   const now=ctx.currentTime,p=snapshot();let count=0;
@@ -150,10 +152,73 @@ function tick(){
     nextTime=at+1/p.density;
   }
 }
-$('play').addEventListener('click',async()=>{try{if(!buffer)return;await ensureAudio();stopPlayback();scanPhase=val('position')/100;lastGrainAt=ctx.currentTime+.04;nextTime=lastGrainAt;updateFX();playing=true;tick();timer=setInterval(tick,35);$('play').disabled=true;$('stop').disabled=false;playStatus('再生中 — Time StretchとPitchを別々に動かしてみてください。')}catch(e){playStatus('再生エラー：'+e.message,true)}});
-$('stop').addEventListener('click',()=>{stopPlayback();playStatus('停止しました。')});
+$('play').addEventListener('click',async()=>{try{if(!buffer)return;await ensureAudio();if(engine==='spectral'){await startSpectral();return;}stopPlayback();scanPhase=val('position')/100;lastGrainAt=ctx.currentTime+.04;nextTime=lastGrainAt;updateFX();playing=true;tick();timer=setInterval(tick,35);$('play').disabled=true;$('stop').disabled=false;playStatus('再生中 — Time StretchとPitchを別々に動かしてみてください。')}catch(e){playStatus('再生エラー：'+e.message,true)}});
+$('stop').addEventListener('click',()=>{spectralGeneration++;stopPlayback();playStatus('停止しました。')});
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing){stopPlayback();playStatus('画面を離れたため停止しました。')}});
 function wavData(audioBuffer){const channels=Math.min(2,audioBuffer.numberOfChannels),length=audioBuffer.length,bytes=44+length*channels*2,ab=new ArrayBuffer(bytes),dv=new DataView(ab);let p=0;const put=s=>{for(let i=0;i<s.length;i++)dv.setUint8(p++,s.charCodeAt(i))};const u16=n=>{dv.setUint16(p,n,true);p+=2},u32=n=>{dv.setUint32(p,n,true);p+=4};put('RIFF');u32(bytes-8);put('WAVE');put('fmt ');u32(16);u16(1);u16(channels);u32(audioBuffer.sampleRate);u32(audioBuffer.sampleRate*channels*2);u16(channels*2);u16(16);put('data');u32(length*channels*2);const data=Array.from({length:channels},(_,c)=>audioBuffer.getChannelData(c));for(let i=0;i<length;i++)for(let c=0;c<channels;c++){const v=clamp(data[c][i],-1,1);dv.setInt16(p,v<0?v*32768:v*32767,true);p+=2}return new Blob([ab],{type:'audio/wav'})}
-$('export').addEventListener('click',async()=>{if(!buffer)return;const btn=$('export'),st=$('exportStatus');btn.disabled=true;st.classList.remove('error');st.textContent='WAVを生成しています…';try{const p=snapshot(),seconds=Number($('exportLength').value),sampleRate=44100,O=window.OfflineAudioContext||window.webkitOfflineAudioContext;if(!O)throw Error('このSafariはオフライン音声書き出しに対応していません。');const offline=new O(2,Math.ceil(seconds*sampleRate),sampleRate),fx=makeFX(offline,offline.destination,p.volume/100,p.reverb/100),chosen=p.reverse?reversed:buffer;let phase=p.position/100,lastAt=0;const maxEvents=Math.ceil(seconds*p.density);for(let i=0;i<maxEvents;i++){const at=i/p.density;if(at>=seconds)break;phase=advancePhase(phase,at-lastAt,p,buffer.duration);lastAt=at;grain(offline,fx.input,chosen,at,phase,p)}const rendered=await offline.startRendering(),blob=wavData(rendered),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='tsubuoto_sculpt_'+new Date().toISOString().slice(0,10)+'_'+seconds+'s.wav';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);st.textContent='WAVの生成が完了しました。ブラウザの「ダウンロード」を確認してください。'}catch(e){st.textContent='書き出しエラー：'+e.message;st.classList.add('error')}finally{btn.disabled=!buffer}});
+
+// SPECTRAL: independent offline phase-vocoder stretch, then resample for pitch.
+// Precompute on demand to keep the audio callback light, including on iPhone.
+function invalidateSpectral(){spectralCache=null;spectralCacheKey='';$('spectralStatus').textContent='';}
+function chooseEngine(name){if(engine===name)return;stopPlayback();engine=name;document.body.classList.toggle('spectralmode',name==='spectral');for(const n of ['Grain','Spectral']){$('engine'+n).classList.toggle('active',name===n.toLowerCase());$('engine'+n).setAttribute('aria-pressed',String(name===n.toLowerCase()))} $('engineInfo').textContent=name==='grain'?'GRAIN：粒の長さ・密度・揺らぎを再生中に変更できます。':'SPECTRAL：周波数を分析して音を引き伸ばします。設定後に再生を押すと音声を生成します（最大約60秒）。';playStatus(buffer?'再生を押してください。':'音声を読み込んでください。');}
+$('engineGrain').addEventListener('click',()=>chooseEngine('grain'));
+$('engineSpectral').addEventListener('click',()=>chooseEngine('spectral'));
+// In-place radix-2 FFT; inverse normalized by N.
+function fft(re,im,inverse=false){let n=re.length;for(let i=1,j=0;i<n;i++){let bit=n>>1;for(;j&bit;bit>>=1)j^=bit;j^=bit;if(i<j){[re[i],re[j]]=[re[j],re[i]];[im[i],im[j]]=[im[j],im[i]];}}for(let len=2;len<=n;len<<=1){let angle=(inverse?2:-2)*Math.PI/len,wR=Math.cos(angle),wI=Math.sin(angle);for(let start=0;start<n;start+=len){let uR=1,uI=0;for(let j=0;j<len/2;j++){const a=start+j,b=a+len/2,vR=re[b]*uR-im[b]*uI,vI=re[b]*uI+im[b]*uR;re[b]=re[a]-vR;im[b]=im[a]-vI;re[a]+=vR;im[a]+=vI;const t=uR*wR-uI*wI;uI=uR*wI+uI*wR;uR=t;}}}if(inverse)for(let i=0;i<n;i++){re[i]/=n;im[i]/=n;}}
+function wrapPhase(x){return x-2*Math.PI*Math.round(x/(2*Math.PI));}
+async function phaseVocoder(src,targetLength,stretchFactor,generation,report){
+ const N=2048,H=256,analysisHop=H/stretchFactor,window=new Float32Array(N);
+ for(let i=0;i<N;i++)window[i]=Math.sqrt(.5-.5*Math.cos(2*Math.PI*i/(N-1)));
+ const result=new Float32Array(targetLength),weights=new Float32Array(targetLength),re=new Float64Array(N),im=new Float64Array(N),lastPhase=new Float64Array(N/2+1),sumPhase=new Float64Array(N/2+1);
+ const frames=Math.ceil((targetLength+N/2)/H);
+ for(let frame=0;frame<frames;frame++){
+  if(generation!==spectralGeneration)throw Error('解析を中止しました');
+  const analysisCenter=frame*analysisHop,synthesisStart=frame*H-N/2;
+  for(let j=0;j<N;j++){const t=analysisCenter+j-N/2,k=Math.floor(t),f=t-k;re[j]=((src[k]||0)*(1-f)+(src[k+1]||0)*f)*window[j];im[j]=0;}
+  fft(re,im);
+  for(let k=0;k<=N/2;k++){
+   const mag=Math.hypot(re[k],im[k]),ph=Math.atan2(im[k],re[k]),omega=2*Math.PI*k/N;
+   if(frame===0){sumPhase[k]=ph;}else{const delta=wrapPhase(ph-lastPhase[k]-omega*analysisHop);sumPhase[k]+=omega*H+delta*H/analysisHop;}
+   lastPhase[k]=ph;re[k]=mag*Math.cos(sumPhase[k]);im[k]=mag*Math.sin(sumPhase[k]);
+  }
+  for(let k=1;k<N/2;k++){re[N-k]=re[k];im[N-k]=-im[k];}im[0]=0;im[N/2]=0;
+  fft(re,im,true);
+  for(let j=0;j<N;j++){const idx=synthesisStart+j;if(idx>=0&&idx<targetLength){const w=window[j];result[idx]+=re[j]*w;weights[idx]+=w*w;}}
+  if(frame%90===0){report(Math.round(frame/frames*100));await new Promise(r=>setTimeout(r,0));}
+ }
+ for(let i=0;i<result.length;i++){const w=weights[i];result[i]=w>.000001?Math.max(-1,Math.min(1,result[i]/w)):0;}
+ return result;
+}
+async function getSpectral(){
+ if(!buffer)throw Error('音声がありません');if(spectralBusy)throw Error('解析中です');
+ const p=snapshot(),pitchRate=Math.pow(2,p.pitch/12),factor=p.stretch*pitchRate;
+ const maxSeconds=60,sampleRate=buffer.sampleRate;
+ const duration=Math.min(maxSeconds,buffer.duration*p.stretch);const internalSeconds=duration*pitchRate;
+ const length=Math.max(1,Math.ceil(internalSeconds*sampleRate));
+ if(length*buffer.numberOfChannels>sampleRate*210)throw Error('この設定は処理量が大きすぎます。Stretch倍率か素材の長さを下げてください。');
+ const key=[buffer.length,buffer.sampleRate,p.stretch,p.pitch,reverse,buffer.numberOfChannels].join(':');
+ if(spectralCache&&spectralCacheKey===key)return{audio:spectralCache,rate:pitchRate};
+ const generation=++spectralGeneration;spectralBusy=true;$('play').disabled=true;
+ try{
+  const channels=Math.min(buffer.numberOfChannels,2),result=ctx.createBuffer(channels,length,sampleRate);
+  for(let c=0;c<channels;c++){
+   const data=(reverse?reversed:buffer).getChannelData(c);
+   const output=await phaseVocoder(data,length,factor,generation,percentage=>{$('spectralStatus').textContent='SPECTRAL解析 '+(c+1)+'/'+channels+'：'+percentage+'%';});
+   result.copyToChannel(output,c);
+  }
+  if(generation!==spectralGeneration)throw Error('解析を中止しました');
+  spectralCache=result;spectralCacheKey=key;$('spectralStatus').textContent='解析完了：約'+duration.toFixed(1)+'秒の音を準備しました。';
+  return{audio:result,rate:pitchRate};
+ }finally{spectralBusy=false;$('play').disabled=!buffer;}
+}
+async function startSpectral(){
+ stopPlayback();const {audio,rate}=await getSpectral();
+ if(engine!=='spectral')return;
+ const source=ctx.createBufferSource();source.buffer=audio;source.playbackRate.value=rate;source.connect(master);spectralSource=source;
+ updateFX();source.onended=()=>{if(spectralSource===source){spectralSource=null;$('play').disabled=false;$('stop').disabled=true;playStatus('スペクトル再生終了。')}};
+ source.start();$('play').disabled=true;$('stop').disabled=false;playStatus('SPECTRAL 再生中。StretchまたはPitchを変更したら再生し直してください。');
+}
+
+$('export').addEventListener('click',async()=>{if(!buffer)return;const btn=$('export'),st=$('exportStatus');btn.disabled=true;st.classList.remove('error');st.textContent='WAVを生成しています…';try{const p=snapshot(),seconds=Number($('exportLength').value),sampleRate=44100,O=window.OfflineAudioContext||window.webkitOfflineAudioContext;if(!O)throw Error('このSafariはオフライン音声書き出しに対応していません。');const offline=new O(2,Math.ceil(seconds*sampleRate),sampleRate),fx=makeFX(offline,offline.destination,p.volume/100,p.reverb/100),chosen=p.reverse?reversed:buffer;if(engine==='spectral'){const result=await getSpectral(),source=offline.createBufferSource();source.buffer=result.audio;source.playbackRate.value=result.rate;source.connect(fx.input);source.start(0);source.stop(seconds);}else{let phase=p.position/100,lastAt=0;const maxEvents=Math.ceil(seconds*p.density);for(let i=0;i<maxEvents;i++){const at=i/p.density;if(at>=seconds)break;phase=advancePhase(phase,at-lastAt,p,buffer.duration);lastAt=at;grain(offline,fx.input,chosen,at,phase,p)}}const rendered=await offline.startRendering(),blob=wavData(rendered),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='tsubuoto_sculpt_'+new Date().toISOString().slice(0,10)+'_'+seconds+'s.wav';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);st.textContent='WAVの生成が完了しました。ブラウザの「ダウンロード」を確認してください。'}catch(e){st.textContent='書き出しエラー：'+e.message;st.classList.add('error')}finally{btn.disabled=!buffer}});
 drawWave();
 </script></body></html>
