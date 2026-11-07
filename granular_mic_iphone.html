@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#151d22">
+<title>粒音 — Granular Sampler</title>
+<style>
+:root{color-scheme:dark;--bg:#151d22;--panel:#202c32;--text:#f1f0e9;--muted:#aebdbf;--accent:#a8d2c0;--line:#39494e}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;line-height:1.5}main{width:min(620px,100%);margin:auto;padding:26px 18px calc(42px + env(safe-area-inset-bottom))}header{margin-bottom:24px}h1{font-size:32px;letter-spacing:.07em;font-weight:550;margin:0}header p{color:var(--muted);font-size:13px;margin:3px 0 0}.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;margin:16px 0}.panel h2{font-size:13px;text-transform:uppercase;letter-spacing:.11em;color:var(--accent);margin:0 0 16px}button{font:inherit;font-weight:650;touch-action:manipulation;border-radius:12px;border:0;min-height:50px;padding:12px 15px;background:var(--accent);color:#10211d}button.secondary{background:#3b5055;color:#fff}button:disabled{opacity:.35}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}.file{display:block;text-align:center;background:#34454b;border-radius:12px;padding:12px;margin-top:10px;color:var(--text);font-size:14px;cursor:pointer}.file input{display:none}.status{font-size:13px;color:var(--muted);margin:14px 0 0;min-height:2.5em}.status.error{color:#ffb3a8}.time{font-variant-numeric:tabular-nums;color:var(--accent)}.slider{margin:18px 0 24px}.slider:last-child{margin-bottom:0}.slider-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:8px}.slider label{font-weight:570;font-size:15px}.slider small{font-size:13px;color:var(--accent);font-variant-numeric:tabular-nums}input[type=range]{width:100%;height:34px;accent-color:var(--accent);touch-action:pan-y;margin:0}footer{font-size:12px;color:var(--muted);padding:12px 3px}#duration{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<main>
+<header><h1>粒音 <span style="font-size:16px;color:var(--accent)">GRANULAR</span></h1><p>マイクで採集した音を、粒にして漂わせる。</p></header>
+<section class="panel">
+<h2>01 / 音を採集</h2>
+<div class="buttons"><button id="record">● 録音開始</button><button id="stopRecord" class="secondary" disabled>■ 録音停止</button></div>
+<label class="file">または音声ファイルを読み込む<input id="file" type="file" accept="audio/*"></label>
+<p class="status" id="recordStatus" role="status">最初に録音開始を押すとマイクの使用許可を求めます。</p>
+<div id="duration">サンプル未読み込み</div>
+</section>
+<section class="panel">
+<h2>02 / 粒子を再生</h2>
+<div class="buttons"><button id="play" disabled>▶ 再生</button><button id="stop" class="secondary" disabled>■ 停止</button></div>
+<p class="status" id="playStatus">音を録音、または読み込んでください。</p>
+</section>
+<section class="panel">
+<h2>03 / 音を変える</h2>
+<div class="slider"><div class="slider-head"><label for="size">Grain Size / 粒の長さ</label><small id="sizeValue"></small></div><input id="size" type="range" min="20" max="1200" step="10" value="240"></div>
+<div class="slider"><div class="slider-head"><label for="density">Density / 粒の密度</label><small id="densityValue"></small></div><input id="density" type="range" min="1" max="60" step="1" value="12"></div>
+<div class="slider"><div class="slider-head"><label for="position">Position / 再生位置</label><small id="positionValue"></small></div><input id="position" type="range" min="0" max="100" step="1" value="50"></div>
+<div class="slider"><div class="slider-head"><label for="spread">Spread / 位置の揺らぎ</label><small id="spreadValue"></small></div><input id="spread" type="range" min="0" max="100" step="1" value="10"></div>
+<div class="slider"><div class="slider-head"><label for="rate">Playback Rate / 再生速度</label><small id="rateValue"></small></div><input id="rate" type="range" min="0.25" max="2" step="0.05" value="1"></div>
+<div class="slider"><div class="slider-head"><label for="volume">Volume / 音量</label><small id="volumeValue"></small></div><input id="volume" type="range" min="0" max="100" step="1" value="65"></div>
+</section>
+<footer>iPhone Safari向け。マイク録音にはHTTPSで公開したページが必要です。音声はこの端末内で処理し、サーバーへ送信しません。録音時はヘッドフォンの使用を推奨します。</footer>
+</main>
+<script>
+'use strict';
+const el = id => document.getElementById(id);
+const ids=['size','density','position','spread','rate','volume'];
+const fmt={size:v=>v+' ms',density:v=>v+' 粒/秒',position:v=>v+'%',spread:v=>v+'%',rate:v=>Number(v).toFixed(2)+'×',volume:v=>v+'%'};
+for(const id of ids){const input=el(id); const sync=()=>el(id+'Value').textContent=fmt[id](input.value);input.addEventListener('input',sync);sync();}
+let ctx=null,master=null,buffer=null,stream=null,recorder=null,chunks=[],recordStart=0,clock=null,playing=false,nextGrain=0;
+const activeSources=new Set();
+function recStatus(message,error=false){el('recordStatus').textContent=message;el('recordStatus').classList.toggle('error',error)}
+function playStatus(message){el('playStatus').textContent=message}
+async function audio(){if(!ctx){const AudioContext=window.AudioContext||window.webkitAudioContext;if(!AudioContext)throw new Error('このブラウザはWeb Audio APIに対応していません');ctx=new AudioContext();master=ctx.createGain();master.gain.value=0.65;master.connect(ctx.destination)}if(ctx.state!=='running')await ctx.resume();return ctx}
+function setBuffer(decoded){stopPlayback();buffer=decoded;el('play').disabled=false;el('duration').textContent='読み込み済み：'+decoded.duration.toFixed(1)+' 秒';playStatus('再生ボタンを押すと粒子音が鳴ります。')}
+function stopTracks(){if(stream){stream.getTracks().forEach(t=>t.stop());stream=null}}
+function controlsRecording(isRecording){el('record').disabled=isRecording;el('stopRecord').disabled=!isRecording;el('file').disabled=isRecording}
+async function decodeBlob(blob){if(!blob.size)throw new Error('録音データが空です');const a=await audio();const ab=await blob.arrayBuffer();return await a.decodeAudioData(ab)}
+el('record').addEventListener('click',async()=>{try{if(!window.isSecureContext||!navigator.mediaDevices?.getUserMedia)throw new Error('マイク録音にはHTTPSのWebページとSafariのマイク許可が必要です。');await audio();stopPlayback();stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false},video:false});if(!window.MediaRecorder)throw new Error('このSafariではMediaRecorderを利用できません。');let options={};for(const t of ['audio/mp4','audio/webm;codecs=opus','audio/webm']){if(MediaRecorder.isTypeSupported(t)){options={mimeType:t};break}}
+recorder=new MediaRecorder(stream,options);chunks=[];
+recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+recorder.onerror=e=>{recStatus('録音エラーが発生しました。',true);stopTracks();controlsRecording(false)};
+recorder.onstop=async()=>{controlsRecording(false);stopTracks();try{recStatus('音声を解析中…');let mime=recorder.mimeType||chunks[0]?.type||'audio/mp4';setBuffer(await decodeBlob(new Blob(chunks,{type:mime})));recStatus('録音が完了しました。')}catch(err){recStatus('録音した音声を読み込めませんでした：'+err.message,true)}};
+recorder.start();recordStart=Date.now();controlsRecording(true);recStatus('● 録音中… 好きな音をマイクに聞かせてください。');
+}catch(err){stopTracks();controlsRecording(false);recStatus(err.message||String(err),true)}});
+el('stopRecord').addEventListener('click',()=>{if(recorder?.state==='recording'){recorder.stop();recStatus('録音を終了しています…')}});
+el('file').addEventListener('change',async e=>{const f=e.target.files?.[0];if(!f)return;try{recStatus('音声ファイルを読み込み中…');setBuffer(await decodeBlob(f));recStatus('「'+f.name+'」を読み込みました。')}catch(err){recStatus('音声を読み込めませんでした：'+err.message,true)}e.target.value=''});
+function scheduleGrain(when){if(!buffer||!ctx)return;const size=Number(el('size').value)/1000,rate=Number(el('rate').value),pos=Number(el('position').value)/100,spread=Number(el('spread').value)/100;
+const played=Math.min(size,Math.max(.01,buffer.duration/rate));const audioSpan=played*rate;const available=Math.max(0,buffer.duration-audioSpan);const center=available*pos;const offset=Math.max(0,Math.min(available,center+(Math.random()*2-1)*spread*buffer.duration*.5));
+const src=ctx.createBufferSource();src.buffer=buffer;src.playbackRate.value=rate;
+const env=ctx.createGain();const peak=Math.min(0.45,1.6/Math.sqrt(Math.max(1,Number(el('density').value)*size)));env.gain.setValueAtTime(0,when);env.gain.linearRampToValueAtTime(peak,when+played/2);env.gain.linearRampToValueAtTime(0,when+played);
+src.connect(env);env.connect(master);activeSources.add(src);src.onended=()=>{activeSources.delete(src);try{src.disconnect();env.disconnect()}catch(_){}};src.start(when,offset,audioSpan);src.stop(when+played+.005)}
+function tick(){if(!playing||!ctx)return;const horizon=ctx.currentTime+.13;let guard=0;while(nextGrain<horizon&&guard++<24){scheduleGrain(nextGrain);nextGrain+=1/Number(el('density').value)}}
+function stopPlayback(){playing=false;if(clock!==null){clearInterval(clock);clock=null}for(const src of activeSources){try{src.stop()}catch(_){}}activeSources.clear();el('stop').disabled=true;el('play').disabled=!buffer;master?.gain.setTargetAtTime(0,ctx.currentTime,.02)}
+el('play').addEventListener('click',async()=>{try{if(!buffer)return;await audio();stopPlayback();master.gain.cancelScheduledValues(ctx.currentTime);master.gain.setValueAtTime(0,ctx.currentTime);master.gain.setTargetAtTime(Number(el('volume').value)/100,ctx.currentTime,.02);playing=true;nextGrain=ctx.currentTime+.03;tick();clock=setInterval(tick,35);el('play').disabled=true;el('stop').disabled=false;playStatus('再生中 — スライダーを動かして音を変えてください。')}catch(err){playStatus('再生できません：'+err.message)}});
+el('stop').addEventListener('click',()=>{stopPlayback();playStatus('停止しました。')});
+el('volume').addEventListener('input',()=>{if(ctx&&master&&playing)master.gain.setTargetAtTime(Number(el('volume').value)/100,ctx.currentTime,.02)});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing){stopPlayback();playStatus('画面が非表示になったため停止しました。')}});
+</script>
+</body>
+</html>
